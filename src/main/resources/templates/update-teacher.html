@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Update teacher')}"></div>
+<body>
+<div th:replace="~{fragments/header-no-search :: headerWithoutSearch}"></div>
+<main class="py-4">
+    <h1>Edit Teacher</h1>
+    <form th:action="@{/teachers/edit-teacher/update/{id}(id=${teacher.id})}"
+          th:object="${teacher}" th:method="post" class="col card p-3 mb-5">
+        <input type="hidden" th:field="${teacher.id}" />
+        <div class="col-4 mb-4">
+            <label for="name">First Name:</label>
+            <input type="text" id="name" th:field="${teacher.firstName}" required/>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" th:field="${teacher.surname}" required>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="courses">Courses:</label>
+            <select multiple="multiple" th:field="${teacher.coursesIds}" id="courses" required>
+                <option value="">Select option</option>
+                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"
+                        th:selected="${teacher.coursesIds != null and #lists.contains(teacher.coursesIds, teacher.id)}"></option>
+            </select>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="faculties">Faculty:</label>
+            <select class="form-select" id="faculties" th:field="${teacher.facultyId}" required>
+                <option value="">Select option</option>
+                <option th:each="faculty : ${faculties}" th:value="${faculty.id}" th:text="${faculty.facultyName}"
+                        th:selected="${teacher.facultyId != null and teacher.facultyId == faculty.id}"></option>
+            </select>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="users">Users:</label>
+            <select class="form-select" id="users" th:field="${teacher.userId}">
+                <option value="">Select option</option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username + ' (' + user.role.roleName + ')'}"
+                        th:selected="${teacher.userId != null and teacher.userId == user.id}"></option>
+            </select>
+        </div>
+        <button type="submit" value="submit" class="btn btn-primary col-2">Save</button>
+    </form>
+</main>
+</body>
+</html>

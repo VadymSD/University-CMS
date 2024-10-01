@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Courses')}"></div>
+<body>
+<div th:replace="~{fragments/header-search :: headerWithSearch('teacher')}"></div>
+<main class="py-4 px-4">
+    <h1>Courses</h1>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th sec:authorize="isAuthenticated()">Teachers</th>
+            <th sec:authorize="isAuthenticated()">Groups</th>
+            <div th:replace="~{fragments/actions :: actions}"></div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${courses}">
+            <td th:text="${course.id}"></td>
+            <td th:text="${course.courseName}"></td>
+            <td th:text="${course.description}"></td>
+            <td sec:authorize="isAuthenticated()">
+                <span th:each="teacher : ${course.teachers}" th:text="${teacher.firstName} + ' '"></span>
+            </td>
+            <td sec:authorize="isAuthenticated()">
+                <span th:each="group : ${course.groups}" th:text="${group.getGroupName()} + ' '"></span>
+            </td>
+            <div th:replace="~{fragments/action-buttons :: actionButtons(${course.id}, 'course')}"></div>
+        </tr>
+        </tbody>
+    </table>
+    <a sec:authorize="hasAnyRole('ADMIN', 'STAFF')" th:href="@{courses/new-course}" class="btn btn-success">Add New Course</a>
+</main>
+</body>
+</html>

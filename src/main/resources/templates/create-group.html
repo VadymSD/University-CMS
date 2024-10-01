@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Update group')}"></div>
+<body>
+<div th:replace="~{fragments/header-no-search :: headerWithoutSearch}"></div>
+<main class="py-4">
+    <h1>Add Group</h1>
+    <form th:action="@{/groups/new-group/add}" th:object="${group}" th:method="post" class="col card p-3 mb-5">
+        <input type="hidden" th:field="${group.id}" />
+        <div class="col-4 mb-4">
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="${group.name}" required/>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="courses">Courses:</label>
+            <select multiple="multiple" th:field="${group.coursesIds}" id="courses">
+                <option value="">Select option</option>
+                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"></option>
+            </select>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="students">Students:</label>
+            <select multiple="multiple" th:field="${group.studentsIds}" id="students">
+                <option value="">Select option</option>
+                <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.firstName}"></option>
+            </select>
+        </div>
+        <button type="submit" value="submit" class="btn btn-primary col-2">Save</button>
+    </form>
+</main>
+</body>
+</html>

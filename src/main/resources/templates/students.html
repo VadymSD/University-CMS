@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Students')}"></div>
+<body>
+<div th:replace="~{fragments/header-search :: headerWithSearch('group')}"></div>
+<main class="py-4 px-4">
+    <h1>Students</h1>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Surname</th>
+                <th>Group</th>
+                <th>Courses</th>
+                <th sec:authorize="hasAnyRole('ADMIN', 'STAFF')">User</th>
+                <div th:replace="~{fragments/actions :: actions}"></div>
+            </tr>2
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.firstName}"></td>
+            <td th:text="${student.surname}"></td>
+            <td th:text="${student.group.groupName}"></td>
+            <td>
+                <span th:each="course : ${student.group.courses}" th:text="${course.courseName} + ' '"></span>
+            </td>
+            <td sec:authorize="hasAnyRole('ADMIN', 'STAFF')">
+                <span th:if="${student.user != null}"
+                    th:text="${student.user.username + ' (' + student.user.role.roleName} + ')'">
+                </span>
+            </td>
+            <div th:replace="~{fragments/action-buttons :: actionButtons(${student.id}, 'student')}"></div>
+        </tr>
+        </tbody>
+    </table>
+    <a sec:authorize="hasAnyRole('ADMIN', 'STAFF')" th:href="@{students/new-student}" class="btn btn-success">Add New Student</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('My timetable')}"></div>
+<body>
+<div th:replace="~{fragments/header-no-search :: headerWithoutSearch}"></div>
+<main class="py-4">
+    <form th:action="@{/lectures/my-lectures/retrieve}" method="post">
+        <div class="col-4 mb-4">
+            <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date" name="startDate" required>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="end-date">End Date:</label>
+            <input type="date" id="end-date" name="endDate" required>
+        </div>
+        <button type="submit">Retrieve Entities</button>
+    </form>
+</main>
+</body>
+</html>

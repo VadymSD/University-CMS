@@ -1,0 +1,10 @@
+DELETE FROM group_lectures;
+DELETE FROM lectures;
+DELETE FROM group_courses;
+DELETE FROM teacher_courses;
+DELETE FROM students;
+DELETE FROM teachers;
+DELETE FROM groups;
+DELETE FROM courses;
+DELETE FROM faculties;
+DELETE FROM universities;

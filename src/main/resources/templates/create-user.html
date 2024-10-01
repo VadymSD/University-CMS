@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Update user')}"></div>
+<body>
+<div th:replace="~{fragments/header-no-search :: headerWithoutSearch}"></div>
+<main class="py-4 px-4">
+    <h1>Add Person</h1>
+    <form th:action="@{/users/new-user/add}" th:object="${user}" th:method="post" class="col card p-3 mb-5">
+        <input type="hidden" th:field="${user.id}" />
+        <div class="col-4 mb-4">
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="${user.username}" required/>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="${user.password}" required>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="roles">Role:</label>
+            <select class="form-select" id="roles" th:field="${user.roleId}" required>
+                <option value="">Select option</option>
+                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.roleName}"></option>
+            </select>
+        </div>
+        <button type="submit" value="submit" class="btn btn-primary col-2">Save</button>
+    </form>
+</main>
+</body>
+</html>

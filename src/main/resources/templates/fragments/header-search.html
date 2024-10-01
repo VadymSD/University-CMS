@@ -1,0 +1,8 @@
+<header th:fragment="headerWithSearch(subject)" class="bg-light p-4 d-flex align-items-center justify-content-between">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <form sec:authorize="isAuthenticated()" action="" method="get" class="search-form">
+        <input type="text" name="keyword" th:placeholder="|Search by ${subject} name|" required />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div th:replace="~{fragments/logout-view :: logoutView}"></div>
+</header>
