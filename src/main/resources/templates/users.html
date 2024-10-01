@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Users')}"></div>
+<body>
+<div th:replace="~{fragments/header-search :: headerWithSearch('role')}"></div>
+<main class="py-4 px-4">
+    <h1>User Administration Dashboard</h1>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.role.roleName}"></td>
+            <div th:replace="~{fragments/action-buttons :: actionButtons(${user.id}, 'user')}"></div>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{users/new-user}" class="btn btn-success">Add New User</a>
+</main>
+</body>
+</html>

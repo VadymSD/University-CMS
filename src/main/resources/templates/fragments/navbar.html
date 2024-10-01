@@ -1,0 +1,11 @@
+<nav th:fragment="navbar" class="d-flex justify-content-between align-items-center">
+    <ul class="list-inline mb-0">
+        <li class="list-inline-item"><a th:href="@{/}" class="text-dark">Home</a></li>
+        <li class="list-inline-item"><a th:href="@{/courses}" class="text-dark">Courses</a></li>
+        <li class="list-inline-item"><a th:href="@{/groups}" class="text-dark">Groups</a></li>
+        <li class="list-inline-item"><a th:href="@{/lectures}" class="text-dark">Lectures</a></li>
+        <li class="list-inline-item"><a th:href="@{/students}" class="text-dark">Students</a></li>
+        <li class="list-inline-item"><a th:href="@{/teachers}" class="text-dark">Teachers</a></li>
+        <li sec:authorize="hasRole('ADMIN')" class="list-inline-item"><a th:href="@{/users}" class="text-dark">User Management</a></li>
+    </ul>
+</nav>

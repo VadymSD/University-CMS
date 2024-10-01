@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Update group')}"></div>
+<body>
+<div th:replace="~{fragments/header-no-search :: headerWithoutSearch}"></div>
+<main class="py-4">
+    <h1>Edit Group</h1>
+    <form th:action="@{/groups/edit-group/update/{id}(id=${group.id})}" th:object="${group}" th:method="post" class="col card p-3 mb-5">
+        <input type="hidden" th:field="${group.id}" />
+        <div class="col-4 mb-4">
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="${group.name}" required/>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="courses">Courses:</label>
+            <select multiple="multiple" th:field="${group.coursesIds}" id="courses" required>
+                <option value="">Select option</option>
+                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"
+                        th:selected="${group.coursesIds != null and #lists.contains(group.coursesIds, group.id)}"></option>
+            </select>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="students">Students:</label>
+            <select class="form-select" multiple="multiple" th:field="${group.studentsIds}" id="students" required>
+                <option value="">Select option</option>
+                <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.firstName}"
+                        th:selected="${group.studentsIds != null and #lists.contains(group.studentsIds, student.id)}"/></option>
+            </select>
+        </div>
+        <button type="submit" value="submit" class="btn btn-primary col-2">Save</button>
+    </form>
+</main>
+</body>
+</html>

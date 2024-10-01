@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Lectures')}"></div>
+<body>
+<div th:replace="~{fragments/header-search :: headerWithSearch('letures')}"></div>
+<main class="py-4 px-4">
+    <h1>Lectures</h1>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Room</th>
+                <th>Teacher</th>
+                <th>Course</th>
+                <th>Groups</th>
+                <th th:replace="~{fragments/actions :: actions}"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="lecture : ${lectures}">
+                <td th:text="${lecture.id}"></td>
+                <td th:text="${lecture.lectureName}"></td>
+                <td th:text="${lecture.date}"></td>
+                <td th:text="${lecture.startTime}"></td>
+                <td th:text="${lecture.endTime}"></td>
+                <td th:text="${lecture.room}"></td>
+                <td >
+                    <span th:if="${lecture.teacher != null}"
+                          th:text="${lecture.teacher.firstName}">
+                    </span>
+                </td>
+                <td >
+                    <span th:if="${lecture.course != null}"
+                          th:text="${lecture.course.courseName}">
+                    </span>
+                </td>
+                <td>
+                    <span th:each="group : ${lecture.groups}" th:text="${group.groupName} + ' '"></span>
+                </td>
+                <td th:replace="~{fragments/action-buttons :: actionButtons(${lecture.id}, 'lecture')}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <a sec:authorize="hasAnyRole('ADMIN', 'STAFF')" th:href="@{lectures/new-lecture}" class="btn btn-success">Add New Lecture</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Update student')}"></div>
+<body>
+<div th:replace="~{fragments/header-no-search :: headerWithoutSearch}"></div>
+<main class="py-4 px-4">
+    <h1>Create Student</h1>
+    <form th:action="@{/students/new-student/add}" th:object="${student}" th:method="post" class="col card p-3 mb-5">
+        <input type="hidden" th:field="${student.id}" />
+        <div class="col-4 mb-4">
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="${student.firstName}" required   />
+        </div>
+        <div class="col-4 mb-4">
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" th:field="${student.surname}" required>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="groups">Group:</label>
+            <select class="form-select" id="groups" th:field="${student.groupId}" required>
+                <option value="">Select option</option>
+                <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.groupName}"></option>
+            </select>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="users">Users:</label>
+            <select class="form-select" id="users" th:field="${student.userId}">
+                <option value="">Select option</option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username + ' (' + user.role.roleName + ')'}"
+                        th:selected="${student.userId != null and student.userId == user.id}"></option>
+            </select>
+        </div>
+        <button type="submit" value="submit" class="btn btn-primary col-2">Save</button>
+    </form>
+</main>
+</body>
+</html>

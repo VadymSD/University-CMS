@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: headFragment('Update course')}"></div>
+<body>
+<div th:replace="~{fragments/header-no-search :: headerWithoutSearch}"></div>
+<main class="py-4">
+    <h1>Add Course</h1>
+    <form th:action="@{/courses/new-course/add}" th:object="${course}" th:method="post" class="col card p-3 mb-5">
+        <div class="col-4 mb-4">
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="${course.name}" required/>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="description">Description:</label>
+            <input type="text" id="description" th:field="${course.description}" required>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="groups">Groups:</label>
+            <select multiple="multiple" th:field="${course.groupsIds}" id="groups">
+                <option value="">Select option</option>
+                <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.groupName}"></option>
+            </select>
+        </div>
+        <div class="col-4 mb-4">
+            <label for="teachers">Teachers:</label>
+            <select multiple="multiple" th:field="${course.teachersIds}" id="teachers">
+                <option value="">Select option</option>
+                <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.firstName}"></option>
+            </select>
+        </div>
+        <button type="submit" value="submit" class="btn btn-primary col-2">Save</button>
+    </form>
+</main>
+</body>
+</html>
